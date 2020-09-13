@@ -1,0 +1,21 @@
+{
+  "name": "yuluExpress",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "kill-exist": "pkill -f node",
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "font-awesome": "*",
+    "http-errors": "^1.6.3",
+    "jquery": "^3.5.1",
+    "morgan": "~1.9.1",
+    "popper.js": "^1.16.1",
+    "pug": "^3.0.0"
+  }
+}

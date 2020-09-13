@@ -1,0 +1,27 @@
+{
+    "remotePath": "/var/www/express",
+    "host": "yuluthu.co.uk",
+    "username": "root",
+    "password": "password",
+    "port": 22,
+    "secure": false,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": "E:/Dropbox/Work/tests/priv.ppk",
+    "passphrase": null,
+    "agent": null,
+    "allow": [],
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ],
+    "generatedFiles": {
+        "extensionsToInclude": [
+            ""
+        ],
+        "path": ""
+    }
+}
