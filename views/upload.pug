@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div(class="main-content m-2")
+        div(class="row")
+            h2 #{title}
+            div(class="input-group mb-3")
+                div(class="upload-container")
+                    input(type="file" class="custom-file-input" id="fileUpload")
+                    label(class="custom-file-label" for="fileUpload") Choose file
+            
