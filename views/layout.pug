@@ -8,14 +8,14 @@ html
         link(rel='stylesheet', href='/stylesheets/style.css'+ versionString)
         link(rel='stylesheet', href='/stylesheets/spacing.css'+ versionString)
         link(rel="stylesheet", href="/font-awesome/css/font-awesome.min.css" + versionString)
-        each item in pageCSS
+        each item in (pageCSS ? pageCSS : [])
             link(rel="stylesheet", href=item + versionString)
 
         script(src="https://code.iconify.design/1/1.0.7/iconify.min.js" + versionString)
         script(src="jquery/jquery.min.js" + versionString)
         script(src="bootstrap/js/bootstrap.min.js" + versionString)
         script(src="javascripts/core.js")
-        each item in pageScripts
+        each item in (pageScripts ? pageScripts : [])
             script(src="javascripts/" + item + versionString)
 
     body

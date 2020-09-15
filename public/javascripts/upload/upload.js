@@ -1,10 +1,8 @@
 var uploadedFiles = [];
 
 $(document).ready(() => {
-}).on('click', '#fileUpload', () => {
-    console.log('yeet')
-    let $this = $(this);
-    console.log('yeet')
-    var file = $this.prop('files');
-    var upload = YUL.NewAjax('upload/uploadFile', {file});
+}).on('change', 'input#fileUpload', () => {
+    let input = document.getElementById('fileUpload');
+    var file = input.files[0];
+    var upload = YUL.NewAjax('upload/uploadFile', file, {fileUpload: true});
 });

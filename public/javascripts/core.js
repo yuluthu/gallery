@@ -215,28 +215,39 @@ var YUL = {
         YUL._charts[name] = createdChart;
         return createdChart;
     },
-    NewAjax: async (url, data, callback) => {
+    NewAjax: async (url, data, options) => {
         if (data === undefined) {
             data = {};
         }
+        if (options === undefined) {
+            options = {};
+        }
         if (Object.keys(data) && data.paramOrder == undefined) {
-            var keys = Object.keys(data);
+            // var keys = Object.keys(data);
             data.paramOrder = Object.keys(data);
         }
+        var headers = {
+            'Content-Type': 'application/json'
+        }
+        var body = data
+
+        if (!!options.fileUpload) {
+            headers = {}
+            formData = new FormData();
+            formData.append('file', data);
+            body = formData;
+            console.log(body)
+        } else {
+            body = JSON.stringify(body)
+        }
+
         const request = await fetch('/' + url, {
             method: 'POST',
             mode: 'same-origin',
             cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => response.json()).then(response => {
-            if (typeof callback === 'function') {
-                callback(response)
-            }
-            return response
-        })
+            headers,
+            body
+        }).then(response => response.json())
         return request;
     },
     Ajax: (url, data, callback, displayAlert, errorCallback) => {

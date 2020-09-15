@@ -1,13 +1,27 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mysql = require('mysql');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const _ = require('lodash');
+path = require('path');
+config = require('./config')
+
+connection = mysql.createConnection({
+    host: config.mysql.host,
+    user: config.mysql.user,
+    password: config.mysql.password,
+    database: config.mysql.db
+});
 
 var preRequest = require('./routes/pre-request');
 var postRequest = require('./routes/post-request');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var fileRouter = require('./routes/file');
 var uploadRouter = require('./routes/upload');
 
 var app = express();
@@ -16,16 +30,25 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(fileUpload({
+    createParentPath: true
+}));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+
+app.use('*', preRequest)
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('*', preRequest)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);
+app.use('/file', fileRouter);
 app.use('*', postRequest);
 
 app.use('/static', express.static(__dirname + '/public'));
