@@ -106,3 +106,26 @@ body {
 .main-content {
     padding: 1em;
 }
+
+.files-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.copy-target {
+    cursor: pointer;
+}
+
+.files-container > .file > img {
+    max-width: 300px;
+    max-height: 300px;
+    margin: 1em auto;
+    display: inherit;
+}
+
+.files-container > .file > svg {
+    max-width: 300px;
+    max-height: 300px;
+    margin: 1em auto;
+    display: inherit;
+}

@@ -1,4 +1,13 @@
 var YUL = {
+    uniqId: function (length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     },
     _areaConversions: {
         SQFT: {
             SQFT: 1,
@@ -236,7 +245,6 @@ var YUL = {
             formData = new FormData();
             formData.append('file', data);
             body = formData;
-            console.log(body)
         } else {
             body = JSON.stringify(body)
         }
@@ -390,12 +398,10 @@ var YUL = {
         $('[data-toggle="tooltip"]').each(() => {
             var $this = $(this);
             var $title = $this.find('title');
-            console.log($this);
             if (!$this.attr('data-title')) {
                 $this.attr('data-title', $title.text());
                 $title.remove();
             }
-            console.log($this, $this.attr('data-title'));
         })
         if ($('[data-toggle="tooltip"]').length) {
             $('[data-toggle="tooltip"]').tooltip();
