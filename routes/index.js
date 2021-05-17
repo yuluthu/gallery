@@ -6,14 +6,16 @@ router.get('/',(req, res, next) => {
   res.render('index', { title: 'Express', pageScripts});
 });
 
-router.get('/gallery',(req, res, next) => {
+router.get('/gallery', async (req, res, next) => {
   pageScripts.push('gallery/gallery.js');
-  connection.query('SELECT * FROM files WHERE status = 1', [], (error, result) => {
-    res.render('gallery', { title: 'Yulu Gallery', pageScripts, files: result.map(v => {
-      v.isImage = coreFunctions.isImage(v.fileType);
-      return v;
-    })});
+  
+  let filesCollection = connection.collection('files');
+  let files = await filesCollection.find({status: 1}).toArray()
+  files = files.map(v => {
+    v.isImage = coreFunctions.isImage(v.fileType);
+    return v;
   });
+  res.render('gallery', { title: 'Yulu Gallery', pageScripts, files});
 });
 
 router.get('/test', (req, res, next) => {

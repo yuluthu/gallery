@@ -28,16 +28,10 @@ router.all('*', (req, res, next) => {
         getFilename: function (fileName) {
             var split = fileName.split(/\.(?=[^\.]+$)/);
             var storedName = coreFunctions.uniqId(20) + '.' + split[1]
-            connection.query('SELECT `id` FROM `files` WHERE `storedName` = ?', [storedName], (error, results) => {
-                if (results.length) {
-                    storedName = getFileName(fileName);
-                }
-            });
             return storedName;
         },
         isImage: function (type) {
             if (type.substr(0, 5) == 'image') {
-                console.log(type)
                 switch (type.substr(6)) {
                     case 'jpg':
                     case 'gif':
@@ -50,6 +44,18 @@ router.all('*', (req, res, next) => {
         },
     }
     now = Date.now();
+
+    if (req.originalUrl.indexOf('.css') == -1 && req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.ico') == -1) {
+        let connectionsLog = connection.collection('connections_log');
+        connectionsLog.insertOne({
+            ip: req.header('X-Real-IP'),
+            params: req.params,
+            path: req.originalUrl,
+            time: new Date
+        });
+    }
+
+
     next();
 });
 

@@ -2,21 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/:fileId', (req, res, next) => {
-    connection.query('SELECT * FROM `files` WHERE `id` = ?', req.params.fileId, (err, result) => {
-        result = result[0];
-        if (result) {
-            var options = {
-                root: './public',
-                dotfiles: 'deny',
-                headers: {
-                  'x-timestamp': Date.now(),
-                  'x-sent': true
-                }
-              }
-            res.sendFile('/uploads/' + result.storedName, options);
+router.get('/:fileId', async (req, res, next) => {
+    let filesCollection = connection.collection('files');
+    let result = await filesCollection.findOne({_id: ObjectId(req.params.fileId)});
+    if (result) {
+      var options = {
+        root: './public',
+        dotfiles: 'deny',
+        headers: {
+          'x-timestamp': Date.now(),
+          'x-sent': true
         }
-    });
+      }
+      res.sendFile('/uploads/' + result.storedName, options);
+    } else {
+      res.json({success: false, error: 'not found'})
+    }
 });
 
 

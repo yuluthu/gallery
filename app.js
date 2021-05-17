@@ -2,7 +2,9 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mysql = require('mysql');
+const mongoDB = require("mongodb");
+const MongoClient = mongoDB.MongoClient;
+ObjectId = mongoDB.ObjectId;
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -10,12 +12,13 @@ const _ = require('lodash');
 path = require('path');
 config = require('./config')
 
-connection = mysql.createConnection({
-    host: config.mysql.host,
-    user: config.mysql.user,
-    password: config.mysql.password,
-    database: config.mysql.db
+let uri = 'mongodb://' + config.mongo.username + ':' + config.mongo.password + '@' + config.mongo.host + ':' + config.mongo.port + '?retryWrites=true&writeConcern=majority';
+dbClient = new MongoClient(uri);
+
+dbClient.connect().then(() => {
+    connection = dbClient.db(config.mongo.database)
 });
+
 
 var preRequest = require('./routes/pre-request');
 var postRequest = require('./routes/post-request');

@@ -9,6 +9,6 @@ block content
                     each file in files
                         div(class="file col-md-3")
                             if file.isImage
-                                img(src="file/" + file.id class="copy-target" data-id=file.id)
+                                img(src="file/" + file._id class="copy-target" data-id=file._id)
                             else
-                                span(class="iconify copy-target" data-id=file.id data-icon="clarity:file-share-2-solid" data-inline="false" data-width="300" data-height="300")
+                                span(class="iconify copy-target" data-id=file._id data-icon="clarity:file-share-2-solid" data-inline="false" data-width="300" data-height="300")
